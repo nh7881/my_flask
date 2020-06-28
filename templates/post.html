@@ -1,0 +1,172 @@
+<html>
+    <head>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <style type="text/css">
+        html, body {
+           width: 100%; height: 100%;
+        }
+        div#all {
+            width:100%;
+            height:100%;
+            float:right;
+        }
+        div#header {
+            width:100%;
+            text-align:center;
+        }
+        div#imgs {
+            width:100%;
+        }
+        img#image1 {
+            width:45%;
+            height:auto;
+            float:left;
+        }
+        img#image2 {
+            width:45%;
+            height:auto;
+            float:right;
+        }
+        figure#ex_img1 {
+            margin: 0; /* 15% from the top and centered */
+            padding:0;
+            width:50%;
+            height:80%;
+            float:left;
+            text-align:center;
+        }
+        figure#ex_img2 {
+            margin: 0; /* 15% from the top and centered */
+            padding:0;
+            width:50%;
+            height:80%;
+            float:right;
+            text-align:center;
+        }
+        div#check {
+            width:100%;
+            height:auto%;
+            display:inline-block;
+            text-align:center;
+        }
+        div#check_text {
+            display:inline-block;
+            text-align:left;
+        }
+        input#submit-btn {
+            float:right;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow:auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            margin: 5% auto; /* 15% from the top and centered */
+            height:80%;
+            width: 100%; /* Could be more or less, depending on screen size */
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+  </style>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>It is example.</p>
+        <figure id="ex_img1">
+            <!--Put the example image URL here. -->
+            <img src="https://ifh.cc/g/5g1qCj.jpg", width="95%"/> <figcaption>good sample</figcaption>
+        </figure>
+        <figure id="ex_img2">
+            <!--Put the example image URL here. -->
+            <img src="https://ifh.cc/g/1AYpe1.jpg", width="95%"/> <figcaption>bad sample</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+        <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
+        <a id="myBtn" class="w3-bar-item w3-button" style="color: #0073BB">sample</a>
+        <div class="w3-container">
+            <!--It is blank line. -->
+            <p></p>
+            <!--write your instruction. -->
+            <p>write your instruction</p>
+        </div>
+    </div>
+    <div id="all" class="w3-container">
+        <div id="header">
+          <button id="openNav" class="w3-button w3-xlarge w3-left" onclick="w3_open()">☰</button>
+          <h1>Look at the pair of photos below and choose the most appropriate option</h1>
+        </div>
+        <div id="imgs">
+          <img id = "image1" src ="https://ifh.cc/g/1AYpe1.jpg">
+          <img id = "image2" src ="https://ifh.cc/g/5g1qCj.jpg">
+        </div>
+        <div id="check">
+            <div id="check_text">
+              <input type="radio" id="most_left" name="chk_info" value="1"><label for="most_left">The Left image is significantly better than the Right image</label></br>
+              <input type="radio" id="left" name="chk_info" value="2"><label for="left">The Left image is marginally better than the Right image</label></br>
+              <input type="radio" id="most_right" name="chk_info" value="3"><label for="most_right">The Right image is significantly better than the Left image</label></br>
+              <input type="radio" id="right" name="chk_info" value="4"><label for="right">The Right image is marginally better than the Left image</label></br>
+              <input type="radio" id="center" name="chk_info" value="0"><label for="center">They are equally good</label>
+            </div>
+        </div>
+        <script type='text/json' id='input'></script>
+        <form id='results-form' method='post' action='dummy' class='text-center'>
+          <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
+          <input type='hidden' value='' name='image_score' id='image_score'/>
+          <input type='hidden' value='' name='selected_image_url' id='selected_image_url'/>
+          <input type='submit' class='btn btn-lg btn-success' id='submit-btn' value='Submit' disabled/>
+        </form>
+    </div>
+    <script>
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <script>
+    function w3_open() {
+      document.getElementById("all").style.width = "75%";
+      document.getElementById("mySidebar").style.width = "25%";
+      document.getElementById("mySidebar").style.display = "block";
+      document.getElementById("openNav").style.display = 'none';
+    }
+    function w3_close() {
+      document.getElementById("all").style.width = "100%";
+      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById("openNav").style.display = "inline-block";
+    }
+    </script>
+  </body>
+</html>
+
